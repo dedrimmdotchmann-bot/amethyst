@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Amethyst</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">⚜️ AMETHYST</div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="constitution.html">Constitution Review</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <h1>Welcome, <span id="userName">Member</span>!</h1>
+            <p>Your dashboard for CORET Foundation Nigeria</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Members</h3>
+                <div class="stat-number" id="totalMembers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Constitution Reviews</h3>
+                <div class="stat-number" id="totalReviews">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Your Zone</h3>
+                <div class="stat-number" id="userZone">—</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Votes</h3>
+                <div class="stat-number" id="activeVotes">0</div>
+            </div>
+        </div>
+
+        <!-- Participation Stats -->
+        <div class="participation-section">
+            <h2>Your Participation</h2>
+            <div class="participation-stats">
+                <div class="part-item">
+                    <span>Last Login:</span>
+                    <strong id="lastLogin">—</strong>
+                </div>
+                <div class="part-item">
+                    <span>Reviews Submitted:</span>
+                    <strong id="userReviews">0</strong>
+                </div>
+                <div class="part-item">
+                    <span>Member Since:</span>
+                    <strong id="memberSince">—</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-section">
+            <h2>Recent Activity</h2>
+            <div id="recentActivity" class="activity-list">
+                <p class="empty">No recent activity</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

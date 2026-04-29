@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constitution Review - Amethyst</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">⚜️ AMETHYST</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="constitution.html" class="active">Constitution Review</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+
+    <div class="constitution-container">
+        <div class="constitution-header">
+            <h1>CORET Foundation Nigeria</h1>
+            <h2>Charter & Governance Framework Review</h2>
+            <p>Phase 0: Member Feedback & Voting</p>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="review-stats">
+            <div class="stat-badge">📊 Total Reviews: <span id="reviewCount">0</span></div>
+            <div class="stat-badge">✅ Your Status: <span id="userStatus">Not submitted</span></div>
+        </div>
+
+        <!-- Constitution Sections for Review -->
+        <div class="sections-container">
+            <!-- Section 1 -->
+            <div class="section-card">
+                <h3>PART I: CHARTER - Sections 1-3 (Name, Vision, Principles)</h3>
+                <div class="section-preview">
+                    <p><strong>1. Name & Legal Status:</strong> CORET Foundation Nigeria operates as a non-profit, non-partisan civic organization.</p>
+                    <p><strong>2. Vision:</strong> A Nigeria built on equity, rational thought, unity, and sustainable development.</p>
+                    <p><strong>3. Core Principles:</strong> Equality, human dignity, neutrality, non-discrimination, peaceful dialogue, evidence-based reasoning.</p>
+                    </div>
+                <div class="feedback-form">
+                    <textarea placeholder="Your feedback, suggestions, or concerns on this section..."></textarea>
+                    <div class="rating">
+                        <label>Approve this section?</label>
+                        <select class="vote">
+                            <option value="">Select</option>
+                            <option value="approve">✅ Approve as written</option>
+                            <option value="amend">✏️ Amend with suggestions</option>
+                            <option value="reject">❌ Reject</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="section-card">
+                <h3>PART I: CHARTER - Sections 4-5 (Human Rights & National Inclusion)</h3>
+                <div class="section-preview">
+                    <p><strong>4. Human Rights:</strong> Equality and non-discrimination regardless of ethnicity, gender, sexual orientation, or belief system.</p>
+                    <p><strong>5. National Inclusion:</strong> Representation from all six geopolitical zones; youth and gender inclusion; linguistic diversity.</p>
+                </div>
+                <div class="feedback-form">
+                    <textarea placeholder="Your feedback, suggestions, or concerns on this section..."></textarea>
+                    <div class="rating">
+                        <label>Approve this section?</label>
+                        <select class="vote">
+                            <option value="">Select</option>
+                            <option value="approve">✅ Approve as written</option>
+                            <option value="amend">✏️ Amend with suggestions</option>
+                            <option value="reject">❌ Reject</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="section-card">
+                <h3>PART II: GOVERNANCE - Sections 6-9 (Structure, Membership, Meetings)</h3>
+                <div class="section-preview">
+                    <p><strong>6. Governance Structure:</strong> National Executive Council (NEC), Standing Committees, decentralized Zonal/State/Local units.</p>
+                    <p><strong>7. Membership:</strong> Open to all who accept objectives; categories include General, Active, Volunteer, Executive.</p>
+                    <p><strong>8. Meetings:</strong> General, Executive, Committee meetings; quorum of 30% or 50 members.</p>
+                    <p><strong>9. Code of Conduct:</strong> Respect, non-discrimination, conflict of interest disclosure.</p>
+                </div>
+                <div class="feedback-form">
+                    <textarea placeholder="Your feedback, suggestions, or concerns on this section..."></textarea>
+                    <div class="rating">
+                        <label>Approve this section?</label>
+                        <select class="vote">
+                            <option value="">Select</option>
+                            <option value="approve">✅ Approve as written</option>
+                            <option value="amend">✏️ Amend with suggestions</option>
+                            <option value="reject">❌ Reject</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4 -->
+            <div class="section-card">
+                <h3>PART II: GOVERNANCE - Sections 10-18 (Finance, Discipline, Tenure, Amendment)</h3>
+                <div class="section-preview">
+                    <p><strong>10. Finance:</strong> Donations, grants, dues; dual-signatory system; audit requirements.</p>
+                    <p><strong>11. Discipline:</strong> Warnings, suspension, expulsion with due process.</p>
+                    <p><strong>12. Tenure:</strong> Two-year terms, renewable once.</p>
+                    <p><strong>13-18:</strong> Amendment, dissolution, data protection, risk management, monitoring, adoption.</p>
+                </div>
+                <div class="feedback-form">
+                    <textarea placeholder="Your feedback, suggestions, or concerns on this section..."></textarea>
+                    <div class="rating">
+                        <label>Approve this section?</label>
+                        <select class="vote">
+                            <option value="">Select</option>
+                            <option value="approve">✅ Approve as written</option>
+                            <option value="amend">✏️ Amend with suggestions</option>
+                            <option value="reject">❌ Reject</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit All Feedback -->
+        <div class="submit-section">
+            <button id="submitAllFeedback" class="submit-btn">Submit All Feedback</button>
+            <p class="note">All sections must have a vote selected before submission.</p>
+        </div>
+
+        <!-- View Existing Feedback -->
+        <div class="feedback-viewer">
+            <h3>Community Feedback Summary</h3>
+            <div id="communityFeedback" class="feedback-list">
+                <p class="empty">No feedback submitted yet. Be the first!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/constitution.js"></script>
+</body>
+</html>
