@@ -3,73 +3,735 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Amethyst</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Amethyst Dashboard - CORET Foundation Nigeria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .logout-btn {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #e53e3e;
+            transform: translateY(-1px);
+        }
+
+        /* Container */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            background: white;
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .nav-tab:hover {
+            background: #e2e8f0;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+            color: #2d3748;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f7fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .badge-admin {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        /* Search */
+        .search-box {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            width: 250px;
+            font-size: 0.875rem;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 4px solid #38a169;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .alert-info {
+            background: #bee3f8;
+            color: #2c5282;
+            border-left: 4px solid #3182ce;
+        }
+
+        /* Profile section */
+        .profile-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 3rem;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .nav-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="nav-brand">⚜️ AMETHYST</div>
-        <div class="nav-links">
-            <a href="dashboard.html" class="active">Dashboard</a>
-            <a href="constitution.html">Constitution Review</a>
-            <a href="#" id="logoutBtn">Logout</a>
+        <div class="logo">
+            <h1>🔮 Amethyst Portal</h1>
+            <p>CORET Foundation Nigeria - Member Dashboard</p>
+        </div>
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <span class="user-name" id="userName">Admin</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
     </nav>
+
     <div class="dashboard-container">
-        <div class="welcome-section">
-            <h1>Welcome, <span id="userName">Member</span>!</h1>
-            <p>Your dashboard for CORET Foundation Nigeria</p>
+        <!-- Tabs -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="dashboard" onclick="switchTab('dashboard')">📊 Dashboard</div>
+            <div class="nav-tab" data-tab="members" onclick="switchTab('members')">👥 Members</div>
+            <div class="nav-tab" data-tab="import" onclick="switchTab('import')">📥 Import Users</div>
+            <div class="nav-tab" data-tab="profile" onclick="switchTab('profile')">👤 My Profile</div>
         </div>
 
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Total Members</h3>
-                <div class="stat-number" id="totalMembers">0</div>
+        <!-- Dashboard Tab -->
+        <div id="dashboardTab" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number" id="totalMembers">0</div>
+                    <div class="stat-label">Total Members</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-number" id="totalZones">0</div>
+                    <div class="stat-label">Zones Covered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚧</div>
+                    <div class="stat-number" id="genderStats">0</div>
+                    <div class="stat-label">Gender Diversity</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-number" id="worldviewStats">0</div>
+                    <div class="stat-label">Worldviews</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <h3>Constitution Reviews</h3>
-                <div class="stat-number" id="totalReviews">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>Your Zone</h3>
-                <div class="stat-number" id="userZone">—</div>
-            </div>
-            <div class="stat-card">
-                <h3>Active Votes</h3>
-                <div class="stat-number" id="activeVotes">0</div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>📋 Recent Members</h2>
+                </div>
+                <div class="card-body">
+                    <div id="recentMembersContainer">
+                        <table id="recentTable">
+                            <thead>
+                                <tr><th>Name</th><th>Email</th><th>Zone</th><th>Worldview</th><th>Registered</th></tr>
+                            </thead>
+                            <tbody id="recentBody"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Participation Stats -->
-        <div class="participation-section">
-            <h2>Your Participation</h2>
-            <div class="participation-stats">
-                <div class="part-item">
-                    <span>Last Login:</span>
-                    <strong id="lastLogin">—</strong>
+        <!-- Members Tab -->
+        <div id="membersTab" class="tab-content hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2>👥 All Members</h2>
+                    <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search by name or email...">
                 </div>
-                <div class="part-item">
-                    <span>Reviews Submitted:</span>
-                    <strong id="userReviews">0</strong>
-                </div>
-                <div class="part-item">
-                    <span>Member Since:</span>
-                    <strong id="memberSince">—</strong>
+                <div class="card-body">
+                    <div style="overflow-x: auto;">
+                        <table id="membersTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Zone</th>
+                                    <th>Gender</th>
+                                    <th>Worldview</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="membersBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Activity -->
-        <div class="recent-section">
-            <h2>Recent Activity</h2>
-            <div id="recentActivity" class="activity-list">
-                <p class="empty">No recent activity</p>
+        <!-- Import Tab -->
+        <div id="importTab" class="tab-content hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2>📥 Import Google Form Users</h2>
+                </div>
+                <div class="card-body">
+                    <div id="importMessage"></div>
+                    <div style="background: #f7fafc; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                        <h3 style="margin-bottom: 0.5rem;">Your 9 Google Form Users</h3>
+                        <p style="color: #718096; margin-bottom: 1rem;">The following users are ready to be imported into Amethyst:</p>
+                        <ul id="userList" style="margin-left: 1.5rem;"></ul>
+                    </div>
+                    <button class="btn btn-primary" onclick="importNineUsersToSystem()" style="width: auto; padding: 0.75rem 1.5rem;">
+                        🚀 Import All 9 Users & Create Accounts
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="profileTab" class="tab-content hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2>👤 My Profile</h2>
+                </div>
+                <div class="card-body">
+                    <div id="profileContent"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="js/auth.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script>
+        // Get current user from session
+        let currentUser = null;
+        let allMembers = [];
+
+        // Load data from localStorage
+        function loadData() {
+            allMembers = JSON.parse(localStorage.getItem('amethyst_members') || '[]');
+            console.log('📋 Loaded members:', allMembers.length);
+            return allMembers;
+        }
+
+        // Update dashboard stats
+        function updateDashboard() {
+            const members = loadData();
+            const activeMembers = members.filter(m => m.status === 'active' && m.role !== 'admin');
+            
+            console.log('📊 Active members (excluding admin):', activeMembers.length);
+            
+            // Total members
+            document.getElementById('totalMembers').textContent = activeMembers.length;
+            
+            // Unique zones
+            const zones = [...new Set(activeMembers.map(m => m.zone).filter(z => z))];
+            document.getElementById('totalZones').textContent = zones.length;
+            
+            // Gender stats
+            const genders = [...new Set(activeMembers.map(m => m.gender).filter(g => g))];
+            document.getElementById('genderStats').textContent = genders.length;
+            
+            // Worldview stats
+            const worldviews = [...new Set(activeMembers.map(m => m.worldview).filter(w => w))];
+            document.getElementById('worldviewStats').textContent = worldviews.length;
+            
+            // Recent members (last 5)
+            const recent = [...activeMembers].reverse().slice(0, 5);
+            const recentBody = document.getElementById('recentBody');
+            
+            if (recent.length === 0) {
+                recentBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No members found</td></tr>';
+            } else {
+                recentBody.innerHTML = recent.map(m => `
+                    <tr>
+                        <td><strong>${escapeHtml(m.fullName)}</strong></td>
+                        <td>${escapeHtml(m.email)}</td>
+                        <td>${escapeHtml(m.zone || '-')}</td>
+                        <td><span class="badge badge-active">${escapeHtml(m.worldview || '-')}</span></td>
+                        <td>${new Date(m.registrationDate).toLocaleDateString()}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Display all members
+        function displayMembers() {
+            const members = loadData();
+            const activeMembers = members.filter(m => m.status === 'active');
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            
+            const filtered = activeMembers.filter(m => 
+                (m.fullName && m.fullName.toLowerCase().includes(searchTerm)) || 
+                (m.email && m.email.toLowerCase().includes(searchTerm))
+            );
+            
+            const membersBody = document.getElementById('membersBody');
+            
+            if (filtered.length === 0) {
+                membersBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No members found</td></tr>';
+            } else {
+                membersBody.innerHTML = filtered.map(m => `
+                    <tr>
+                        <td><strong>${escapeHtml(m.fullName || '-')}</strong></td>
+                        <td>${escapeHtml(m.email || '-')}</td>
+                        <td>${escapeHtml(m.phone || '-')}</td>
+                        <td>${escapeHtml(m.zone || '-')}</td>
+                        <td>${escapeHtml(m.gender || '-')}</td>
+                        <td><span class="badge badge-active">${escapeHtml(m.worldview || '-')}</span></td>
+                        <td><span class="badge ${m.role === 'admin' ? 'badge-admin' : 'badge-active'}">${m.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Import 9 users
+        function importNineUsersToSystem() {
+            const nineUsers = [
+                { fullName: "Melody F. Samuel", email: "samuelmelly425@gmail.com", phone: "07081200764", worldview: "Atheist", ageRange: "18 - 25", gender: "Male", zone: "South-West", password: "melody123" },
+                { fullName: "Chinaza James-Ibe", email: "nazaekpere.ji@gmail.com", phone: "08106833221", worldview: "Non-Religious", ageRange: "18 - 25", gender: "Female", zone: "South-East", password: "chinaza123" },
+                { fullName: "Chioma Black", email: "chiomablack2001@gmail.com", phone: "07015457824", worldview: "Humanist", ageRange: "18 - 25", gender: "Female", zone: "South-East", password: "chioma123" },
+                { fullName: "Maduka Anthony ikenna", email: "anthonymaduka71@gmail.com", phone: "08037835130", worldview: "Humanist", ageRange: "40 - 55", gender: "Male", zone: "South-East", password: "maduka123" },
+                { fullName: "B. B. Inyang", email: "blessinbrian@gmail.com", phone: "+2348186423960", worldview: "Humanist", ageRange: "26 - 39", gender: "Male", zone: "South-East", password: "blessin123" },
+                { fullName: "Najibu Abubakar", email: "Najeebabubakar3rd@gmail.com", phone: "07060732239", worldview: "Humanist", ageRange: "26 - 39", gender: "Male", zone: "North-East", password: "najibu123" },
+                { fullName: "Muhammed Babangida", email: "muhammedbabangida29@gmail.com", phone: "07032122593", worldview: "Humanist", ageRange: "26 - 39", gender: "Male", zone: "North-East", password: "muhammed123" },
+                { fullName: "Juliet Obiajulu", email: "julietobi777@gmail.com", phone: "08130922127", worldview: "Theist", ageRange: "26 - 39", gender: "Female", zone: "South-South", password: "juliet123" },
+                { fullName: "Emmanuel Ike", email: "emmanuelikeamadi@gmail.com", phone: "09157818284", worldview: "Humanist", ageRange: "26 - 39", gender: "Male", zone: "South-South", password: "emmanuel123" }
+            ];
+            
+            let members = loadData();
+            let addedCount = 0;
+            let results = [];
+            
+            // Check if admin exists
+            const adminExists = members.some(m => m.email === 'admin@amethyst.ng');
+            if (!adminExists) {
+                members.push({
+                    id: 'admin_001',
+                    fullName: 'System Administrator',
+                    email: 'admin@amethyst.ng',
+                    password: 'admin123',
+                    zone: 'South-West',
+                    gender: 'Prefer not to say',
+                    role: 'admin',
+                    status: 'active',
+                    registrationDate: new Date().toISOString()
+                });
+                addedCount++;
+            }
+            
+            // Add users
+            for (const user of nineUsers) {
+                if (!members.some(m => m.email === user.email)) {
+                    members.push({
+                        id: `USER_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+                        fullName: user.fullName,
+                        email: user.email,
+                        phone: user.phone,
+                        password: user.password,
+                        worldview: user.worldview,
+                        ageRange: user.ageRange,
+                        gender: user.gender,
+                        zone: user.zone,
+                        role: 'member',
+                        status: 'active',
+                        registrationDate: new Date().toISOString()
+                    });
+                    addedCount++;
+                    results.push(`${user.fullName}: ${user.email} / ${user.password}`);
+                }
+            }
+            
+            if (addedCount > 0) {
+                localStorage.setItem('amethyst_members', JSON.stringify(members));
+                const msgDiv = document.getElementById('importMessage');
+                msgDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        ✅ Successfully imported ${addedCount} users!<br><br>
+                        <strong>🔐 Login Credentials:</strong><br>
+                        ${results.join('<br>')}<br><br>
+                        <strong>Admin:</strong> admin@amethyst.ng / admin123
+                    </div>
+                `;
+                loadData();
+                updateDashboard();
+                displayMembers();
+            } else {
+                document.getElementById('importMessage').innerHTML = `
+                    <div class="alert alert-info">
+                        ℹ️ All users are already imported! Total members: ${members.length}
+                    </div>
+                `;
+            }
+        }
+
+        // Display user list on import page
+        function displayUserList() {
+            const nineUsers = [
+                "Melody F. Samuel (samuelmelly425@gmail.com)",
+                "Chinaza James-Ibe (nazaekpere.ji@gmail.com)",
+                "Chioma Black (chiomablack2001@gmail.com)",
+                "Maduka Anthony ikenna (anthonymaduka71@gmail.com)",
+                "B. B. Inyang (blessinbrian@gmail.com)",
+                "Najibu Abubakar (Najeebabubakar3rd@gmail.com)",
+                "Muhammed Babangida (muhammedbabangida29@gmail.com)",
+                "Juliet Obiajulu (julietobi777@gmail.com)",
+                "Emmanuel Ike (emmanuelikeamadi@gmail.com)"
+            ];
+            const userList = document.getElementById('userList');
+            userList.innerHTML = nineUsers.map(u => `<li>${u}</li>`).join('');
+        }
+
+        // Display profile
+        function displayProfile() {
+            const storedUser = sessionStorage.getItem('amethyst_current_user');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+            }
+            
+            const profileContent = document.getElementById('profileContent');
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.fullName || currentUser.email;
+                document.getElementById('userAvatar').textContent = (currentUser.fullName || 'U').charAt(0).toUpperCase();
+                
+                profileContent.innerHTML = `
+                    <div class="profile-card">
+                        <div class="profile-avatar">${(currentUser.fullName || 'U').charAt(0).toUpperCase()}</div>
+                        <h3>${escapeHtml(currentUser.fullName || 'User')}</h3>
+                        <p><strong>📧 Email:</strong> ${escapeHtml(currentUser.email)}</p>
+                        <p><strong>👥 Role:</strong> ${escapeHtml(currentUser.role || 'Member')}</p>
+                        <p><strong>📍 Zone:</strong> ${escapeHtml(currentUser.zone || 'Not set')}</p>
+                        <p><strong>⚧ Gender:</strong> ${escapeHtml(currentUser.gender || 'Not set')}</p>
+                        <p><strong>🌍 Worldview:</strong> ${escapeHtml(currentUser.worldview || 'Not set')}</p>
+                        <p><strong>📅 Member since:</strong> ${new Date(currentUser.registrationDate).toLocaleDateString()}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            
+            // Update active tab styling
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Refresh data
+            if (tabName === 'dashboard') updateDashboard();
+            if (tabName === 'members') displayMembers();
+            if (tabName === 'profile') displayProfile();
+        }
+
+        // Helper functions
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function logout() {
+            sessionStorage.removeItem('amethyst_current_user');
+            window.location.href = 'index.html';
+        }
+
+        // Search functionality
+        if (document.getElementById('searchInput')) {
+            document.getElementById('searchInput').addEventListener('input', displayMembers);
+        }
+
+        // Initialize
+        function init() {
+            // Check if user is logged in
+            const storedUser = sessionStorage.getItem('amethyst_current_user');
+            if (!storedUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            currentUser = JSON.parse(storedUser);
+            displayProfile();
+            
+            // Check if members exist, if not import default
+            let members = loadData();
+            if (members.length <= 1) {
+                console.log('No members found, importing default users...');
+                importNineUsersToSystem();
+            }
+            
+            updateDashboard();
+            displayUserList();
+        }
+
+        init();
+    </script>
 </body>
 </html>

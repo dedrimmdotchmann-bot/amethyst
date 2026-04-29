@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import 9 Users to Amethyst</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 20px;
+            background: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .card-header h2 { color: #2d3748; margin-bottom: 5px; }
+        .card-header p { color: #718096; }
+        .card-body { padding: 30px; }
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn-success { background: #48bb78; }
+        .btn-secondary { background: #e2e8f0; color: #4a5568; }
+        .btn-danger { background: #f56565; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
+        th { background: #f7fafc; font-weight: 600; }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-success { background: #c6f6d5; color: #22543d; }
+        .status-pending { background: #fefcbf; color: #744210; }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .alert-success { background: #c6f6d5; color: #22543d; border-left: 4px solid #38a169; }
+        .alert-info { background: #bee3f8; color: #2c5282; border-left: 4px solid #3182ce; }
+        .alert-warning { background: #fef3c7; color: #92400e; border-left: 4px solid #f59e0b; }
+        .progress-bar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            transition: width 0.3s;
+        }
+        .hidden { display: none; }
+        .credentials-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .copy-btn {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 Import 9 Users from Google Form to Amethyst</h2>
+                <p>Import users with FIXED passwords that work with Amethyst login</p>
+            </div>
+            <div class="card-body">
+                <!-- Step 1: Show preview of 9 users -->
+                <div id="step1">
+                    <div class="alert alert-info">
+                        <strong>📋 Data Found:</strong> 9 users from your Google Form are ready to import.
+                    </div>
+                    
+                    <div style="overflow-x: auto; max-height: 400px;">
+                        <table id="previewTable">
+                            <thead>
+                                <tr><th>#</th><th>Username/Email</th><th>Full Name</th><th>Age</th><th>Gender</th><th>Location</th><th>Worldview</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="previewBody"></tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="importUsers()">✅ Import All 9 Users & Create Accounts</button>
+                        <button class="btn btn-danger" onclick="clearAllUsers()">🗑️ Clear All Users (Reset)</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Processing -->
+                <div id="step2" class="hidden">
+                    <div class="progress-bar" id="progressBar" style="width: 0%">0%</div>
+                    <div id="results"></div>
+                    <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" onclick="location.reload()">↺ Import More</button>
+                        <button class="btn" onclick="exportCredentials()">📥 Export Credentials CSV</button>
+                        <button class="btn" onclick="copyAllPasswords()">📋 Copy All Passwords</button>
+                        <button class="btn" onclick="goToLogin()">🔐 Go to Login Page</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // FIXED: The 9 users data with SIMPLE PASSWORDS that work with Amethyst
+        const usersData = [
+            {
+                email: "samuelmelly425@gmail.com",
+                fullName: "Melody F. Samuel",
+                ageRange: "18 - 25",
+                gender: "Male",
+                location: "lle-ife, Osun State",
+                memberType: "Returning Member",
+                phone: "07081200764",
+                worldview: "Atheist",
+                password: "melody123",
+                zone: "South-West"
+            },
+            {
+                email: "nazaekpere.ji@gmail.com",
+                fullName: "Chinaza James-Ibe",
+                ageRange: "18 - 25",
+                gender: "Female",
+                location: "Imo, Nigeria",
+                memberType: "New Member",
+                phone: "08106833221",
+                worldview: "Non-Religious",
+                password: "chinaza123",
+                zone: "South-East"
+            },
+            {
+                email: "chiomablack2001@gmail.com",
+                fullName: "Chioma Black",
+                ageRange: "18 - 25",
+                gender: "Female",
+                location: "Enugu, Nigeria",
+                memberType: "New Member",
+                phone: "07015457824",
+                worldview: "Humanist",
+                password: "chioma123",
+                zone: "South-East"
+            },
+            {
+                email: "anthonymaduka71@gmail.com",
+                fullName: "Maduka Anthony ikenna",
+                ageRange: "40 - 55",
+                gender: "Male",
+                location: "Aba, Nigeria",
+                memberType: "Returning Member",
+                phone: "08037835130",
+                worldview: "Humanist",
+                password: "maduka123",
+                zone: "South-East"
+            },
+            {
+                email: "blessinbrian@gmail.com",
+                fullName: "B. B. Inyang",
+                ageRange: "26 - 39",
+                gender: "Male",
+                location: "Enugu, Nigeria",
+                memberType: "Returning Member",
+                phone: "+2348186423960",
+                worldview: "Humanist",
+                password: "blessin123",
+                zone: "South-East"
+            },
+            {
+                email: "Najeebabubakar3rd@gmail.com",
+                fullName: "Najibu Abubakar",
+                ageRange: "26 - 39",
+                gender: "Male",
+                location: "Bauchi, Nigeria",
+                memberType: "New Member",
+                phone: "07060732239",
+                worldview: "Humanist",
+                password: "najibu123",
+                zone: "North-East"
+            },
+            {
+                email: "muhammedbabangida29@gmail.com",
+                fullName: "Muhammed Babangida",
+                ageRange: "26 - 39",
+                gender: "Male",
+                location: "Gashua",
+                memberType: "New Member",
+                phone: "07032122593",
+                worldview: "Humanist",
+                password: "muhammed123",
+                zone: "North-East"
+            },
+            {
+                email: "julietobi777@gmail.com",
+                fullName: "Juliet Obiajulu",
+                ageRange: "26 - 39",
+                gender: "Female",
+                location: "Delta Nigeria",
+                memberType: "New Member",
+                phone: "08130922127",
+                worldview: "Theist",
+                password: "juliet123",
+                zone: "South-South"
+            },
+            {
+                email: "emmanuelikeamadi@gmail.com",
+                fullName: "Emmanuel Ike",
+                ageRange: "26 - 39",
+                gender: "Male",
+                location: "Port Harcourt",
+                memberType: "New Member",
+                phone: "09157818284",
+                worldview: "Humanist",
+                password: "emmanuel123",
+                zone: "South-South"
+            }
+        ];
+
+        let importResults = [];
+
+        // Display preview
+        function displayPreview() {
+            const tbody = document.getElementById('previewBody');
+            const existingMembers = JSON.parse(localStorage.getItem('amethyst_members') || '[]');
+            
+            tbody.innerHTML = usersData.map((user, index) => {
+                const exists = existingMembers.some(m => m.email === user.email);
+                const status = exists ? '⚠️ Already exists' : '✅ Ready';
+                const statusClass = exists ? 'status-pending' : 'status-success';
+                
+                return `<tr style="${index % 2 === 0 ? 'background: #f9f9f9' : ''}">
+                    <td>${index + 1}</td>
+                    <td><strong>${escapeHtml(user.email.split('@')[0])}</strong><br><small style="color:#718096">${escapeHtml(user.email)}</small></td>
+                    <td><strong>${escapeHtml(user.fullName)}</strong></td>
+                    <td>${escapeHtml(user.ageRange)}</td>
+                    <td>${escapeHtml(user.gender)}</td>
+                    <td><small>${escapeHtml(user.location)}</small></td>
+                    <td>${escapeHtml(user.worldview)}</td>
+                    <td><span class="status-badge ${statusClass}">${status}</span></td>
+                 </tr>`;
+            }).join('');
+        }
+
+        // Import all users - FIXED to work with Amethyst login
+        async function importUsers() {
+            const existingMembers = JSON.parse(localStorage.getItem('amethyst_members') || '[]');
+            const newUsers = usersData.filter(u => !existingMembers.some(m => m.email === u.email));
+            
+            if (newUsers.length === 0) {
+                alert('All 9 users already exist in the system!');
+                return;
+            }
+            
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            
+            importResults = [];
+            const progressBar = document.getElementById('progressBar');
+            
+            for (let i = 0; i < newUsers.length; i++) {
+                const user = newUsers[i];
+                
+                // Update progress
+                const percent = ((i + 1) / newUsers.length) * 100;
+                progressBar.style.width = `${percent}%`;
+                progressBar.textContent = `${Math.round(percent)}% (${i + 1}/${newUsers.length})`;
+                
+                // Create member object for Amethyst with FIXED password
+                const newMember = {
+                    id: `IMPORTED_${Date.now()}_${Math.random().toString(36).substr(2, 8)}`,
+                    email: user.email,
+                    fullName: user.fullName,
+                    phone: user.phone,
+                    ageRange: user.ageRange,
+                    gender: user.gender,
+                    location: user.location,
+                    memberType: user.memberType,
+                    worldview: user.worldview,
+                    zone: user.zone,
+                    password: user.password,  // USING FIXED SIMPLE PASSWORD
+                    registrationDate: new Date().toISOString(),
+                    status: 'active',
+                    role: 'member',
+                    source: 'google_form_import'
+                };
+                
+                existingMembers.push(newMember);
+                
+                importResults.push({
+                    fullName: user.fullName,
+                    email: user.email,
+                    phone: user.phone,
+                    worldview: user.worldview,
+                    password: user.password,
+                    status: 'success'
+                });
+                
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('amethyst_members', JSON.stringify(existingMembers));
+            
+            // Also ensure admin exists
+            const adminExists = existingMembers.some(m => m.email === 'admin@amethyst.ng');
+            if (!adminExists) {
+                existingMembers.push({
+                    id: 'admin_001',
+                    fullName: 'System Administrator',
+                    email: 'admin@amethyst.ng',
+                    password: 'admin123',
+                    zone: 'South-West',
+                    gender: 'Prefer not to say',
+                    role: 'admin',
+                    status: 'active',
+                    registrationDate: new Date().toISOString()
+                });
+                localStorage.setItem('amethyst_members', JSON.stringify(existingMembers));
+            }
+            
+            // Display results
+            displayResults();
+        }
+        
+        function displayResults() {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = `<div class="alert alert-success">✅ Successfully imported ${importResults.length} users!</div>`;
+            html += '<div style="overflow-x: auto; max-height: 400px;"><table style="width:100%">';
+            html += '<thead><tr><th>#</th><th>Name</th><th>Email</th><th>Worldview</th><th>Password</th><th>Status</th></tr></thead><tbody>';
+            
+            importResults.forEach((result, index) => {
+                html += `<tr>
+                    <td>${index + 1}</td>
+                    <td><strong>${escapeHtml(result.fullName)}</strong></td>
+                    <td>${escapeHtml(result.email)}</td>
+                    <td>${escapeHtml(result.worldview)}</td>
+                    <td><code style="background:#e2e8f0;padding:4px 8px;border-radius:4px;font-weight:bold;">${result.password}</code></td>
+                    <td><span class="status-badge status-success">Created</span></td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table></div>';
+            
+            // Add credentials box with all passwords
+            html += `<div class="credentials-box" id="credentialsBox">
+                <strong>🔐 ALL LOGIN CREDENTIALS:</strong><br>
+                <button class="copy-btn" onclick="copyAllPasswords()">📋 Copy All to Clipboard</button><br><br>
+                ${importResults.map(r => `${r.fullName}: ${r.email} / <strong style="color:#48bb78">${r.password}</strong>`).join('<br>')}
+                <br><br>
+                <strong>👑 Admin Login:</strong> admin@amethyst.ng / admin123
+            </div>`;
+            
+            html += `<div class="alert alert-info" style="margin-top:20px;">
+                <strong>✅ LOGIN INSTRUCTIONS:</strong><br>
+                1. Go to your Amethyst login page (index.html)<br>
+                2. Use the email and password shown above<br>
+                3. Example: ${importResults[0]?.email} / ${importResults[0]?.password}<br><br>
+                <strong>📧 To send real emails:</strong> Update the sendEmail() function with your email API.
+            </div>`;
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function copyAllPasswords() {
+            let text = "CORET FOUNDATION - AMETHYST LOGIN CREDENTIALS\n";
+            text += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
+            importResults.forEach(r => {
+                text += `${r.fullName}\n`;
+                text += `Email: ${r.email}\n`;
+                text += `Password: ${r.password}\n`;
+                text += `---\n`;
+            });
+            text += `\nAdmin: admin@amethyst.ng / admin123\n`;
+            text += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            
+            navigator.clipboard.writeText(text);
+            alert('✅ All credentials copied to clipboard!');
+        }
+        
+        function exportCredentials() {
+            if (importResults.length === 0) {
+                alert('No import results to export');
+                return;
+            }
+            
+            const csvRows = [['Full Name', 'Email', 'Phone', 'Worldview', 'Password']];
+            importResults.forEach(r => {
+                csvRows.push([r.fullName, r.email, r.phone || '', r.worldview, r.password]);
+            });
+            
+            const csvContent = csvRows.map(row => `"${row.join('","')}"`).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `amethyst_credentials_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function clearAllUsers() {
+            if (confirm('⚠️ WARNING: This will delete ALL users except admin. Are you sure?')) {
+                const adminOnly = [{
+                    id: 'admin_001',
+                    fullName: 'System Administrator',
+                    email: 'admin@amethyst.ng',
+                    password: 'admin123',
+                    zone: 'South-West',
+                    gender: 'Prefer not to say',
+                    role: 'admin',
+                    status: 'active',
+                    registrationDate: new Date().toISOString()
+                }];
+                localStorage.setItem('amethyst_members', JSON.stringify(adminOnly));
+                alert('✅ All users cleared! Only admin remains. Refresh the page.');
+                location.reload();
+            }
+        }
+        
+        function goToLogin() {
+            window.location.href = 'index.html';
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // Initialize
+        displayPreview();
+    </script>
+</body>
+</html>
