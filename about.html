@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About CORET Foundation | Community of Renaissance Thinkers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        /* Mission Vision Cards */
+        .mv-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mv-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .mv-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .mv-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .mv-card h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .mv-card p {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        /* Core Values */
+        .values-section {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .values-section h2 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 2rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-item h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-item p {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        /* Executive Team */
+        .executive-section {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .executive-section h2 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 2rem;
+        }
+
+        .executive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .executive-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 16px;
+            transition: transform 0.2s;
+        }
+
+        .executive-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .executive-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .executive-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.25rem;
+        }
+
+        .executive-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .executive-bio {
+            color: #718096;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .executive-contact {
+            font-size: 0.75rem;
+            color: #a0aec0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-section h2 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-info {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .contact-info h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-detail {
+            margin-bottom: 1rem;
+        }
+
+        .contact-detail strong {
+            color: #4a5568;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-detail a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .contact-detail a:hover {
+            text-decoration: underline;
+        }
+
+        .social-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            background: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            transition: all 0.2s;
+        }
+
+        .social-link:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .contact-form {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .contact-form button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a202c;
+            color: #a0aec0;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .hero {
+                padding: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>🔮 Amethyst</h1>
+            <p>CORET Foundation Nigeria</p>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="groups.html">Groups</a>
+            <button class="btn-login" onclick="window.location.href='index.html'">Login</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Community of Renaissance Thinkers</h1>
+            <div class="tagline">Building a Better Nigeria Through Critical Thinking</div>
+            <div class="description">
+                CORET Foundation Nigeria is a non-profit, non-partisan civic organization dedicated to promoting 
+                Humanism, critical thinking, and community development across Nigeria. We bring together thinkers, 
+                innovators, and change-makers committed to a better future.
+            </div>
+        </div>
+
+        <!-- Mission & Vision -->
+        <div class="mv-container">
+            <div class="mv-card">
+                <div class="mv-icon">🎯</div>
+                <h3>Our Mission</h3>
+                <p>To foster a community of critical thinkers who champion Humanist values, scientific reasoning, and social progress for a better Nigeria.</p>
+            </div>
+            <div class="mv-card">
+                <div class="mv-icon">👁️</div>
+                <h3>Our Vision</h3>
+                <p>A Nigeria where reason, compassion, and evidence-based thinking guide individual and collective action for the greater good.</p>
+            </div>
+        </div>
+
+        <!-- Core Values -->
+        <div class="values-section">
+            <h2>🌟 Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">🔍</div>
+                    <h4>Critical Thinking</h4>
+                    <p>Questioning assumptions and seeking evidence-based understanding</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🤝</div>
+                    <h4>Community & Belonging</h4>
+                    <p>Building inclusive spaces for like-minded individuals</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🧠</div>
+                    <h4>Science & Reason</h4>
+                    <p>Promoting scientific literacy and rational discourse</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">⚖️</div>
+                    <h4>Human Rights & Equality</h4>
+                    <p>Advocating for justice, dignity, and equal opportunity</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">📚</div>
+                    <h4>Personal Growth</h4>
+                    <p>Continuous learning and self-improvement</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🌍</div>
+                    <h4>Social Impact</h4>
+                    <p>Creating positive change in our communities</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Team -->
+        <div class="executive-section">
+            <h2>👥 Executive Leadership</h2>
+            <div class="executive-grid" id="executiveGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>📞 Get in Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>📍 Office Address</h3>
+                    <div class="contact-detail">
+                        <strong>Headquarters:</strong>
+                        123 Allen Avenue, Ikeja<br>
+                        Lagos, Nigeria
+                    </div>
+                    <div class="contact-detail">
+                        <strong>Secretariat:</strong>
+                        45 Independence Layout<br>
+                        Enugu, Nigeria
+                    </div>
+                    
+                    <h3 style="margin-top: 1.5rem;">📞 Phone</h3>
+                    <div class="contact-detail">
+                        <strong>General:</strong> <a href="tel:+2348023456789">+234 802 345 6789</a>
+                    </div>
+                    <div class="contact-detail">
+                        <strong>Support:</strong> <a href="tel:+2348034567890">+234 803 456 7890</a>
+                    </div>
+                    
+                    <h3 style="margin-top: 1.5rem;">📧 Email</h3>
+                    <div class="contact-detail">
+                        <strong>General:</strong> <a href="mailto:info@coret.ng">info@coret.ng</a>
+                    </div>
+                    <div class="contact-detail">
+                        <strong>Support:</strong> <a href="mailto:support@coret.ng">support@coret.ng</a>
+                    </div>
+                    <div class="contact-detail">
+                        <strong>Membership:</strong> <a href="mailto:membership@coret.ng">membership@coret.ng</a>
+                    </div>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>⏰ Working Hours</h3>
+                    <div class="contact-detail">
+                        <strong>Weekdays:</strong> 9:00 AM - 5:00 PM
+                    </div>
+                    <div class="contact-detail">
+                        <strong>Saturday:</strong> 10:00 AM - 2:00 PM
+                    </div>
+                    <div class="contact-detail">
+                        <strong>Sunday:</strong> Closed
+                    </div>
+                    
+                    <h3 style="margin-top: 1.5rem;">🌐 Follow Us</h3>
+                    <div class="social-grid">
+                        <a href="#" class="social-link">🐦 Twitter</a>
+                        <a href="#" class="social-link">📘 Facebook</a>
+                        <a href="#" class="social-link">📸 Instagram</a>
+                        <a href="#" class="social-link">🔗 LinkedIn</a>
+                        <a href="#" class="social-link">📺 YouTube</a>
+                        <a href="https://chat.whatsapp.com/HcqS9j2RZHnA6xOyBJi6Bq" class="social-link">💬 WhatsApp</a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>📝 Send Us a Message</h3>
+                    <form id="contactForm">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject">
+                        <textarea rows="4" placeholder="Your Message" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2026 Community of Renaissance Thinkers Foundation (CORET) Nigeria</p>
+            <p style="margin-top: 0.5rem; font-size: 0.75rem;">Registered Non-Profit Organization | CAC/IT/NO 123456</p>
+        </div>
+    </div>
+
+    <script>
+        // Executive Team Data
+        const executives = [
+            {
+                name: "Chief Chukwudi Okafor",
+                title: "Community President",
+                bio: "Humanist leader and community organizer with 15+ years of experience in civic engagement and social reform. Former executive at the Nigerian Humanist Association.",
+                email: "president@coret.ng",
+                initals: "CO",
+                social: { twitter: "#", linkedin: "#" }
+            },
+            {
+                name: "Dr. Amina Bello",
+                title: "Vice President",
+                bio: "Academic researcher specializing in secular ethics and philosophy. PhD in Philosophy from University of Lagos. Author of 'Reason in the Public Square'.",
+                email: "vp@coret.ng",
+                initals: "AB",
+                social: { twitter: "#", linkedin: "#" }
+            },
+            {
+                name: "Mr. Oluwaseun Adeyemi",
+                title: "General Secretary",
+                bio: "Legal expert and human rights advocate. Called to the Nigerian Bar in 2010. Serves on the board of several civil society organizations.",
+                email: "secretary@coret.ng",
+                initals: "OA",
+                social: { twitter: "#", linkedin: "#" }
+            },
+            {
+                name: "Ms. Ifeanyi Okonkwo",
+                title: "Treasurer",
+                bio: "Financial analyst with expertise in nonprofit management. MBA from Lagos Business School. Committed to transparent financial governance.",
+                email: "treasurer@coret.ng",
+                initals: "IO",
+                social: { twitter: "#", linkedin: "#" }
+            },
+            {
+                name: "Melody F. Samuel",
+                title: "Director of Membership",
+                bio: "Community builder and youth advocate. Leads membership engagement and retention initiatives across Nigeria's geopolitical zones.",
+                email: "membership@coret.ng",
+                initals: "MS",
+                social: { twitter: "#", linkedin: "#" }
+            },
+            {
+                name: "Dr. Bayo Adeleke",
+                title: "Director of Research",
+                bio: "Professor of Philosophy at Obafemi Awolowo University. Leads research initiatives on secularism and humanism in Africa.",
+                email: "research@coret.ng",
+                initals: "BA",
+                social: { twitter: "#", linkedin: "#" }
+            }
+        ];
+
+        // Populate executive grid
+        function loadExecutives() {
+            const grid = document.getElementById('executiveGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = executives.map(exec => `
+                <div class="executive-card">
+                    <div class="executive-avatar">${exec.initals}</div>
+                    <h3>${exec.name}</h3>
+                    <div class="executive-title">${exec.title}</div>
+                    <div class="executive-bio">${exec.bio}</div>
+                    <div class="executive-contact">
+                        📧 ${exec.email}
+                    </div>
+                    <div class="social-links">
+                        <a href="${exec.social.twitter}" class="social-link" style="padding: 0.25rem 0.5rem;">🐦</a>
+                        <a href="${exec.social.linkedin}" class="social-link" style="padding: 0.25rem 0.5rem;">🔗</a>
+                        <a href="mailto:${exec.email}" class="social-link" style="padding: 0.25rem 0.5rem;">✉️</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Handle contact form submission
+        function setupContactForm() {
+            const form = document.getElementById('contactForm');
+            if (!form) return;
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you within 48 hours.');
+                form.reset();
+            });
+        }
+
+        // Initialize page
+        loadExecutives();
+        setupContactForm();
+    </script>
+</body>
+</html>
