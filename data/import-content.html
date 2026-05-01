@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Homepage Content - Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 20px;
+            background: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .card-header h2 { color: #2d3748; }
+        .card-body { padding: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-success { background: #48bb78; }
+        .btn-danger { background: #f56565; }
+        .news-item {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        .hidden { display: none; }
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .alert-success { background: #c6f6d5; color: #22543d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>📝 Manage Homepage Content</h2>
+                <p>Add, edit, or remove news articles on the homepage</p>
+            </div>
+            <div class="card-body">
+                <div id="message"></div>
+                
+                <!-- Add News Form -->
+                <div class="form-group">
+                    <label>➕ Add New News Article</label>
+                    <input type="text" id="newsTitle" placeholder="Title">
+                    <select id="newsCategory" style="margin-top: 10px;">
+                        <option value="executive">🏛️ Leadership Update</option>
+                        <option value="membership">🤝 Membership Drive</option>
+                        <option value="constitution">📜 Governance</option>
+                        <option value="event">🎉 Event</option>
+                        <option value="general">📢 General Announcement</option>
+                    </select>
+                    <textarea id="newsExcerpt" rows="2" placeholder="Short excerpt..." style="margin-top: 10px;"></textarea>
+                    <textarea id="newsContent" rows="5" placeholder="Full content..." style="margin-top: 10px;"></textarea>
+                    <button class="btn btn-success" onclick="addNews()" style="margin-top: 10px;">➕ Publish News</button>
+                </div>
+
+                <hr style="margin: 20px 0;">
+
+                <!-- Existing News -->
+                <h3>📰 Existing News Articles</h3>
+                <div id="newsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load news from localStorage
+        let newsItems = JSON.parse(localStorage.getItem('coret_news') || '[]');
+
+        function saveNews() {
+            localStorage.setItem('coret_news', JSON.stringify(newsItems));
+            displayNews();
+        }
+
+        function addNews() {
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const excerpt = document.getElementById('newsExcerpt').value;
+            const content = document.getElementById('newsContent').value;
+            
+            if (!title || !excerpt || !content) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            const categoryMap = {
+                executive: 'category-executive',
+                membership: 'category-membership', 
+                constitution: 'category-constitution',
+                event: 'category-event',
+                general: 'category-general'
+            };
+            
+            const categoryNames = {
+                executive: '🏛️ Leadership Update',
+                membership: '🤝 Membership Drive',
+                constitution: '📜 Governance',
+                event: '🎉 Event',
+                general: '📢 Announcement'
+            };
+            
+            newsItems.unshift({
+                id: Date.now(),
+                title: title,
+                category: categoryMap[category],
+                categoryName: categoryNames[category],
+                excerpt: excerpt,
+                content: content,
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                timestamp: new Date().toISOString()
+            });
+            
+            saveNews();
+            document.getElementById('newsTitle').value = '';
+            document.getElementById('newsExcerpt').value = '';
+            document.getElementById('newsContent').value = '';
+            
+            showMessage('✅ News article published!', 'success');
+        }
+        
+        function deleteNews(id) {
+            if (confirm('Delete this news article?')) {
+                newsItems = newsItems.filter(item => item.id !== id);
+                saveNews();
+                showMessage('✅ News article deleted', 'success');
+            }
+        }
+        
+        function displayNews() {
+            const container = document.getElementById('newsList');
+            if (newsItems.length === 0) {
+                container.innerHTML = '<p>No news articles yet. Add one above.</p>';
+                return;
+            }
+            
+            container.innerHTML = newsItems.map(item => `
+                <div class="news-item">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="font-size: 16px;">${escapeHtml(item.title)}</strong>
+                            <span style="display: block; font-size: 12px; color: #718096;">${item.categoryName} • ${item.date}</span>
+                        </div>
+                        <button onclick="deleteNews(${item.id})" style="background: #f56565; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Delete</button>
+                    </div>
+                    <p style="margin-top: 8px; font-size: 13px; color: #4a5568;">${escapeHtml(item.excerpt)}</p>
+                </div>
+            `).join('');
+        }
+        
+        function showMessage(msg, type) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+            setTimeout(() => msgDiv.innerHTML = '', 3000);
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        displayNews();
+    </script>
+</body>
+</html>

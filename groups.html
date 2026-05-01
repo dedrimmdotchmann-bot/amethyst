@@ -1,0 +1,670 @@
+<div class="amethyst-banner" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 24px;"><div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;"><div><span style="font-size: 28px;">??</span><span style="font-size: 20px; font-weight: bold; margin-left: 10px;">Amethyst</span><span style="font-size: 12px; opacity: 0.8; margin-left: 10px;">CORET Foundation Nigeria</span></div></div></div>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Groups - CORET Foundation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .btn-logout {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Section */
+        .groups-header {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .groups-header h1 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .groups-header p {
+            color: #718096;
+        }
+
+        /* My Groups Summary */
+        .my-groups-summary {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .summary-card {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .summary-label {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        /* Section Styles */
+        .groups-section {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title h2 {
+            color: #2d3748;
+            font-size: 1.5rem;
+        }
+
+        .section-badge {
+            background: #e2e8f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #4a5568;
+        }
+
+        /* Groups Grid */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .group-card {
+            background: #f7fafc;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+        }
+
+        .group-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .group-card.joined {
+            border: 2px solid #48bb78;
+            background: #f0fff4;
+        }
+
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .group-icon {
+            font-size: 2.5rem;
+        }
+
+        .join-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-joined {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-not-joined {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .group-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .group-description {
+            color: #718096;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .group-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            flex-wrap: wrap;
+        }
+
+        .group-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .btn-join {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .btn-joined {
+            background: #48bb78;
+        }
+
+        .btn-leave {
+            background: #f56565;
+        }
+
+        .btn-join:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>🔮 Amethyst</h1>
+            <p>CORET Foundation Nigeria</p>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="about.html">ℹ️ About</a>
+            <a href="dashboard.html">📊 Dashboard</a>
+            <a href="groups.html">👥 Groups</a>
+            <a href="data/import-users.html">📥 Import</a>
+            <button class="btn-logout" onclick="logout()">🚪 Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="groups-header">
+            <h1>🌟 Community Groups</h1>
+            <p>Connect with members based on your region, interests, and programs</p>
+        </div>
+
+        <!-- My Groups Summary -->
+        <div class="my-groups-summary" id="myGroupsSummary">
+            <div class="summary-card">
+                <div class="summary-number" id="regionCount">0</div>
+                <div class="summary-label">Regional Groups</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-number" id="interestCount">0</div>
+                <div class="summary-label">Interest Groups</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-number" id="programCount">0</div>
+                <div class="summary-label">Programs Enrolled</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All Groups</button>
+            <button class="filter-btn" data-filter="region">📍 Regional</button>
+            <button class="filter-btn" data-filter="interest">💡 Interest</button>
+            <button class="filter-btn" data-filter="program">📋 Programs</button>
+            <button class="filter-btn" data-filter="joined">✅ My Groups</button>
+        </div>
+
+        <!-- Region Groups -->
+        <div class="groups-section" data-category="region">
+            <div class="section-title">
+                <h2>📍 Regional Groups</h2>
+                <span class="section-badge">Based on your geopolitical zone</span>
+            </div>
+            <div class="groups-grid" id="regionGroups"></div>
+        </div>
+
+        <!-- Interest Groups -->
+        <div class="groups-section" data-category="interest">
+            <div class="section-title">
+                <h2>💡 Interest Groups</h2>
+                <span class="section-badge">Based on your interests</span>
+            </div>
+            <div class="groups-grid" id="interestGroups"></div>
+        </div>
+
+        <!-- Program Groups -->
+        <div class="groups-section" data-category="program">
+            <div class="section-title">
+                <h2>📋 Programs</h2>
+                <span class="section-badge">Skill development & learning</span>
+            </div>
+            <div class="groups-grid" id="programGroups"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // GROUPS DATA
+        // ============================================
+        
+        // Region Groups (6 Geopolitical Zones)
+        const regionGroups = [
+            { id: "region_nc", name: "North-Central", icon: "🏔️", description: "FCT Abuja, Niger, Kwara, Kogi, Benue, Nasarawa, Plateau", states: ["FCT Abuja", "Niger", "Kwara", "Kogi", "Benue", "Nasarawa", "Plateau"], coordinator: "John Ade", memberCount: 24 },
+            { id: "region_ne", name: "North-East", icon: "🏜️", description: "Adamawa, Bauchi, Borno, Gombe, Taraba, Yobe", states: ["Adamawa", "Bauchi", "Borno", "Gombe", "Taraba", "Yobe"], coordinator: "Musa Ibrahim", memberCount: 18 },
+            { id: "region_nw", name: "North-West", icon: "⛰️", description: "Kaduna, Katsina, Kano, Kebbi, Sokoto, Jigawa, Zamfara", states: ["Kaduna", "Katsina", "Kano", "Kebbi", "Sokoto", "Jigawa", "Zamfara"], coordinator: "Amina Bello", memberCount: 31 },
+            { id: "region_se", name: "South-East", icon: "🌴", description: "Abia, Anambra, Ebonyi, Enugu, Imo", states: ["Abia", "Anambra", "Ebonyi", "Enugu", "Imo"], coordinator: "Chinaza James-Ibe", memberCount: 42 },
+            { id: "region_ss", name: "South-South", icon: "🌊", description: "Akwa Ibom, Bayelsa, Cross River, Delta, Edo, Rivers", states: ["Akwa Ibom", "Bayelsa", "Cross River", "Delta", "Edo", "Rivers"], coordinator: "Emmanuel Ike", memberCount: 37 },
+            { id: "region_sw", name: "South-West", icon: "🏖️", description: "Ekiti, Lagos, Ogun, Ondo, Osun, Oyo", states: ["Ekiti", "Lagos", "Ogun", "Ondo", "Osun", "Oyo"], coordinator: "Melody Samuel", memberCount: 56 }
+        ];
+
+        // Interest Groups
+        const interestGroups = [
+            { id: "interest_philosophy", name: "Philosophy & Ethics", icon: "🧠", description: "Deep discussions on ethics, morality, and philosophical thought", moderator: "Dr. Bayo Adeleke", meetingSchedule: "Saturdays, 4 PM WAT", memberCount: 45 },
+            { id: "interest_science", name: "Science & Education", icon: "🔬", description: "Scientific literacy, critical thinking, and educational reform", moderator: "Prof. Ngozi Eze", meetingSchedule: "Wednesdays, 6 PM WAT", memberCount: 52 },
+            { id: "interest_career", name: "Career & Skill Development", icon: "💼", description: "Professional growth, mentorship, and skill sharing", moderator: "Oluwaseun Adeyemi", meetingSchedule: "Tuesdays, 7 PM WAT", memberCount: 67 },
+            { id: "interest_social", name: "Social Impact & Activism", icon: "🤝", description: "Community service, advocacy, and social change initiatives", moderator: "Juliet Obiajulu", meetingSchedule: "Thursdays, 5 PM WAT", memberCount: 38 },
+            { id: "interest_book", name: "Book Club", icon: "📚", description: "Monthly book readings and literary discussions", moderator: "Chioma Black", meetingSchedule: "Last Sunday, 3 PM WAT", memberCount: 29 },
+            { id: "interest_wellbeing", name: "Mental Wellbeing", icon: "🧘", description: "Mental health awareness and wellness support", moderator: "Chinaza James-Ibe", meetingSchedule: "Mondays, 8 PM WAT", memberCount: 41 }
+        ];
+
+        // Program Groups
+        const programGroups = [
+            { id: "program_mentorship", name: "Mentorship Program", icon: "🎓", description: "One-on-one mentoring for young professionals", coordinator: "Maduka Anthony", duration: "6 months", memberCount: 23 },
+            { id: "program_speakers", name: "Speakers Bureau", icon: "🎤", description: "Train public speakers for Humanist advocacy", coordinator: "B. B. Inyang", duration: "Ongoing", memberCount: 15 },
+            { id: "program_research", name: "Research Hub", icon: "📊", description: "Collaborative research on secularism and humanism", coordinator: "Najibu Abubakar", duration: "Ongoing", memberCount: 12 },
+            { id: "program_youth", name: "Youth Renaissance", icon: "🌟", description: "Programs for young Humanists (18-25)", coordinator: "Melody Samuel", duration: "Ongoing", memberCount: 34 },
+            { id: "program_women", name: "Women in Humanism", icon: "👩", description: "Empowering women in secular spaces", coordinator: "Chioma Black", duration: "Ongoing", memberCount: 28 }
+        ];
+
+        // User's joined groups (stored in localStorage)
+        let userJoinedGroups = JSON.parse(localStorage.getItem('coret_joined_groups') || '[]');
+        
+        // Get current user
+        let currentUser = JSON.parse(sessionStorage.getItem('amethyst_current_user') || '{}');
+
+        // Helper: Get user's region based on zone
+        function getUserRegion() {
+            const userZone = currentUser.zone || 'South-West';
+            const regionMap = {
+                'North-Central': 'region_nc',
+                'North-East': 'region_ne',
+                'North-West': 'region_nw',
+                'South-East': 'region_se',
+                'South-South': 'region_ss',
+                'South-West': 'region_sw'
+            };
+            return regionMap[userZone] || 'region_sw';
+        }
+
+        // Helper: Check if user joined a group
+        function hasJoined(groupId) {
+            return userJoinedGroups.includes(groupId);
+        }
+
+        // Join group
+        function joinGroup(groupId) {
+            if (!hasJoined(groupId)) {
+                userJoinedGroups.push(groupId);
+                localStorage.setItem('coret_joined_groups', JSON.stringify(userJoinedGroups));
+                renderAllGroups();
+                updateSummary();
+                showToast('✅ Successfully joined the group!', 'success');
+            }
+        }
+
+        // Leave group
+        function leaveGroup(groupId) {
+            userJoinedGroups = userJoinedGroups.filter(id => id !== groupId);
+            localStorage.setItem('coret_joined_groups', JSON.stringify(userJoinedGroups));
+            renderAllGroups();
+            updateSummary();
+            showToast('❌ You have left the group', 'info');
+        }
+
+        // Toggle join/leave
+        function toggleGroup(groupId) {
+            if (hasJoined(groupId)) {
+                leaveGroup(groupId);
+            } else {
+                joinGroup(groupId);
+            }
+        }
+
+        // Render region groups
+        function renderRegionGroups() {
+            const container = document.getElementById('regionGroups');
+            const userRegion = getUserRegion();
+            
+            container.innerHTML = regionGroups.map(group => {
+                const isJoined = hasJoined(group.id);
+                const isRecommended = group.id === userRegion;
+                
+                return `
+                    <div class="group-card ${isJoined ? 'joined' : ''}">
+                        <div class="group-header">
+                            <div class="group-icon">${group.icon}</div>
+                            <div class="join-status ${isJoined ? 'status-joined' : 'status-not-joined'}">
+                                ${isJoined ? '✅ Joined' : '⚪ Not Joined'}
+                            </div>
+                        </div>
+                        <div class="group-name">${group.name} ${isRecommended ? '⭐' : ''}</div>
+                        <div class="group-description">${group.description}</div>
+                        <div class="group-meta">
+                            <span>👥 ${group.memberCount} members</span>
+                            <span>👤 Coordinator: ${group.coordinator}</span>
+                        </div>
+                        <button class="btn-join ${isJoined ? 'btn-joined' : ''}" onclick="toggleGroup('${group.id}')">
+                            ${isJoined ? '✅ Joined' : '🔘 Join Group'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render interest groups
+        function renderInterestGroups() {
+            const container = document.getElementById('interestGroups');
+            
+            container.innerHTML = interestGroups.map(group => {
+                const isJoined = hasJoined(group.id);
+                
+                return `
+                    <div class="group-card ${isJoined ? 'joined' : ''}">
+                        <div class="group-header">
+                            <div class="group-icon">${group.icon}</div>
+                            <div class="join-status ${isJoined ? 'status-joined' : 'status-not-joined'}">
+                                ${isJoined ? '✅ Joined' : '⚪ Not Joined'}
+                            </div>
+                        </div>
+                        <div class="group-name">${group.name}</div>
+                        <div class="group-description">${group.description}</div>
+                        <div class="group-meta">
+                            <span>👥 ${group.memberCount} members</span>
+                            <span>🎯 Moderator: ${group.moderator}</span>
+                            <span>📅 ${group.meetingSchedule}</span>
+                        </div>
+                        <button class="btn-join ${isJoined ? 'btn-joined' : ''}" onclick="toggleGroup('${group.id}')">
+                            ${isJoined ? '✅ Joined' : '🔘 Join Group'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render program groups
+        function renderProgramGroups() {
+            const container = document.getElementById('programGroups');
+            
+            container.innerHTML = programGroups.map(group => {
+                const isJoined = hasJoined(group.id);
+                
+                return `
+                    <div class="group-card ${isJoined ? 'joined' : ''}">
+                        <div class="group-header">
+                            <div class="group-icon">${group.icon}</div>
+                            <div class="join-status ${isJoined ? 'status-joined' : 'status-not-joined'}">
+                                ${isJoined ? '✅ Enrolled' : '⚪ Not Enrolled'}
+                            </div>
+                        </div>
+                        <div class="group-name">${group.name}</div>
+                        <div class="group-description">${group.description}</div>
+                        <div class="group-meta">
+                            <span>👥 ${group.memberCount} enrolled</span>
+                            <span>👤 Coordinator: ${group.coordinator}</span>
+                            <span>⏱️ ${group.duration}</span>
+                        </div>
+                        <button class="btn-join ${isJoined ? 'btn-joined' : ''}" onclick="toggleGroup('${group.id}')">
+                            ${isJoined ? '✅ Enrolled' : '📋 Enroll Now'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Update summary counts
+        function updateSummary() {
+            const regionJoined = regionGroups.filter(g => hasJoined(g.id)).length;
+            const interestJoined = interestGroups.filter(g => hasJoined(g.id)).length;
+            const programJoined = programGroups.filter(g => hasJoined(g.id)).length;
+            
+            document.getElementById('regionCount').textContent = regionJoined;
+            document.getElementById('interestCount').textContent = interestJoined;
+            document.getElementById('programCount').textContent = programJoined;
+        }
+
+        // Filter groups by category
+        function filterGroups(category) {
+            const sections = document.querySelectorAll('.groups-section');
+            sections.forEach(section => {
+                if (category === 'all') {
+                    section.style.display = 'block';
+                } else if (category === 'joined') {
+                    // For joined filter, we show all sections but filter cards
+                    section.style.display = 'block';
+                } else if (section.dataset.category === category) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Render all groups
+        function renderAllGroups() {
+            renderRegionGroups();
+            renderInterestGroups();
+            renderProgramGroups();
+            updateSummary();
+        }
+
+        // Toast notification
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#48bb78' : '#4299e1'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                font-size: 14px;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('amethyst_current_user');
+            window.location.href = 'index.html';
+        }
+
+        // Setup filter buttons
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterGroups(btn.dataset.filter);
+                });
+            });
+        }
+
+        // Check if user is logged in
+        function checkAuth() {
+            if (!currentUser || !currentUser.email) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Initialize page
+        function init() {
+            checkAuth();
+            renderAllGroups();
+            setupFilters();
+            
+            // Add animation styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        init();
+    </script>
+</body>
+</html><script src="js/role-navigation.js"></script>  
+<script src="js/main-nav.js"></script> 
+Added to about.htmlecho <script src="js/nav.js"></script> 

@@ -1,3 +1,4 @@
+<div class="amethyst-banner" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 24px;"><div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;"><div><span style="font-size: 28px;">??</span><span style="font-size: 20px; font-weight: bold; margin-left: 10px;">Amethyst</span><span style="font-size: 12px; opacity: 0.8; margin-left: 10px;">CORET Foundation Nigeria</span></div></div></div>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,59 +18,21 @@
             min-height: 100vh;
         }
 
-        /* Navbar */
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 1rem 2rem;
+        /* Amethyst Banner */
+        .amethyst-banner {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 24px;
+        }
+
+        .banner-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo h1 {
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .logo p {
-            font-size: 0.75rem;
-            color: #718096;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #4a5568;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        .btn-login {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
+            gap: 15px;
         }
 
         /* Container */
@@ -189,7 +152,7 @@
             font-size: 0.875rem;
         }
 
-        /* Executive Team */
+        /* Executive Team - Will be hidden for non-logged in */
         .executive-section {
             background: white;
             border-radius: 24px;
@@ -268,6 +231,22 @@
             color: #667eea;
             text-decoration: none;
             font-size: 1.2rem;
+        }
+
+        /* Login Required Message */
+        .login-required-message {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-required-message a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
         }
 
         /* Contact Section */
@@ -380,7 +359,6 @@
             border-radius: 16px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -395,19 +373,16 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">
-            <h1>🔮 Amethyst</h1>
-            <p>CORET Foundation Nigeria</p>
+    <!-- Amethyst Banner -->
+    <div class="amethyst-banner">
+        <div class="banner-container">
+            <div>
+                <span style="font-size: 28px;">🔮</span>
+                <span style="font-size: 20px; font-weight: bold; margin-left: 10px;">Amethyst</span>
+                <span style="font-size: 12px; opacity: 0.8; margin-left: 10px;">CORET Foundation Nigeria</span>
+            </div>
         </div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="groups.html">Groups</a>
-            <button class="btn-login" onclick="window.location.href='index.html'">Login</button>
-        </div>
-    </nav>
+    </div>
 
     <div class="container">
         <!-- Hero Section -->
@@ -472,12 +447,18 @@
             </div>
         </div>
 
-        <!-- Executive Team -->
-        <div class="executive-section">
+        <!-- Executive Team (Hidden for non-logged in) -->
+        <div id="executiveSection" class="executive-section">
             <h2>👥 Executive Leadership</h2>
             <div class="executive-grid" id="executiveGrid">
                 <!-- Populated by JavaScript -->
             </div>
+        </div>
+
+        <!-- Login Required Message (Shown when not logged in) -->
+        <div id="loginRequiredMessage" class="login-required-message" style="display: none;">
+            <p>🔐 <strong>Executive leadership profiles are available to logged-in members only.</strong></p>
+            <p><a href="index.html">Login here</a> to view our executive team and get full access to member resources.</p>
         </div>
 
         <!-- Contact Section -->
@@ -566,77 +547,69 @@
             {
                 name: "Chief Chukwudi Okafor",
                 title: "Community President",
-                bio: "Humanist leader and community organizer with 15+ years of experience in civic engagement and social reform. Former executive at the Nigerian Humanist Association.",
+                bio: "Humanist leader and community organizer with 15+ years of experience in civic engagement and social reform.",
                 email: "president@coret.ng",
-                initals: "CO",
-                social: { twitter: "#", linkedin: "#" }
+                initials: "CO"
             },
             {
                 name: "Dr. Amina Bello",
                 title: "Vice President",
-                bio: "Academic researcher specializing in secular ethics and philosophy. PhD in Philosophy from University of Lagos. Author of 'Reason in the Public Square'.",
+                bio: "Academic researcher specializing in secular ethics and philosophy. PhD in Philosophy from University of Lagos.",
                 email: "vp@coret.ng",
-                initals: "AB",
-                social: { twitter: "#", linkedin: "#" }
+                initials: "AB"
             },
             {
                 name: "Mr. Oluwaseun Adeyemi",
                 title: "General Secretary",
-                bio: "Legal expert and human rights advocate. Called to the Nigerian Bar in 2010. Serves on the board of several civil society organizations.",
+                bio: "Legal expert and human rights advocate. Called to the Nigerian Bar in 2010.",
                 email: "secretary@coret.ng",
-                initals: "OA",
-                social: { twitter: "#", linkedin: "#" }
+                initials: "OA"
             },
             {
                 name: "Ms. Ifeanyi Okonkwo",
                 title: "Treasurer",
-                bio: "Financial analyst with expertise in nonprofit management. MBA from Lagos Business School. Committed to transparent financial governance.",
+                bio: "Financial analyst with expertise in nonprofit management. MBA from Lagos Business School.",
                 email: "treasurer@coret.ng",
-                initals: "IO",
-                social: { twitter: "#", linkedin: "#" }
+                initials: "IO"
             },
             {
                 name: "Melody F. Samuel",
                 title: "Director of Membership",
-                bio: "Community builder and youth advocate. Leads membership engagement and retention initiatives across Nigeria's geopolitical zones.",
+                bio: "Community builder and youth advocate. Leads membership engagement initiatives across Nigeria.",
                 email: "membership@coret.ng",
-                initals: "MS",
-                social: { twitter: "#", linkedin: "#" }
+                initials: "MS"
             },
             {
                 name: "Dr. Bayo Adeleke",
                 title: "Director of Research",
-                bio: "Professor of Philosophy at Obafemi Awolowo University. Leads research initiatives on secularism and humanism in Africa.",
+                bio: "Professor of Philosophy at Obafemi Awolowo University. Leads research on secularism in Africa.",
                 email: "research@coret.ng",
-                initals: "BA",
-                social: { twitter: "#", linkedin: "#" }
+                initials: "BA"
             }
         ];
 
-        // Populate executive grid
+        // Load executives
         function loadExecutives() {
             const grid = document.getElementById('executiveGrid');
             if (!grid) return;
             
             grid.innerHTML = executives.map(exec => `
                 <div class="executive-card">
-                    <div class="executive-avatar">${exec.initals}</div>
+                    <div class="executive-avatar">${exec.initials}</div>
                     <h3>${exec.name}</h3>
                     <div class="executive-title">${exec.title}</div>
                     <div class="executive-bio">${exec.bio}</div>
-                    <div class="executive-contact">
-                        📧 ${exec.email}
-                    </div>
+                    <div class="executive-contact">📧 ${exec.email}</div>
                     <div class="social-links">
-                        <a href="${exec.social.twitter}" class="social-link" style="padding: 0.25rem 0.5rem;">🐦</a>
-                        <a href="${exec.social.linkedin}" class="social-link" style="padding: 0.25rem 0.5rem;">🔗</a>
-                        <a href="mailto:${exec.email}" class="social-link" style="padding: 0.25rem 0.5rem;">✉️</a>
+                        <a href="#">🐦</a>
+                        <a href="#">🔗</a>
+                        <a href="mailto:${exec.email}">✉️</a>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Handle contact form submission
+        // Setup contact form
         function setupContactForm() {
             const form = document.getElementById('contactForm');
             if (!form) return;
@@ -648,9 +621,29 @@
             });
         }
 
-        // Initialize page
+        // ============================================
+        // HIDE EXECUTIVE SECTION FOR NON-LOGGED IN USERS
+        // ============================================
+        const isLoggedIn = sessionStorage.getItem('amethyst_current_user') !== null;
+        const executiveSection = document.getElementById('executiveSection');
+        const loginRequiredMessage = document.getElementById('loginRequiredMessage');
+        
+        if (!isLoggedIn && executiveSection) {
+            executiveSection.style.display = 'none';
+            if (loginRequiredMessage) {
+                loginRequiredMessage.style.display = 'block';
+            }
+        } else if (isLoggedIn && loginRequiredMessage) {
+            loginRequiredMessage.style.display = 'none';
+        }
+
+        // Initialize
         loadExecutives();
         setupContactForm();
     </script>
+    
+    <!-- Main Navigation -->
+    <script src="js/main-nav.js"></script>
 </body>
-</html>
+</html><script src="js/main-nav.js"></script> 
+<script src="js/nav.js"></script> 
